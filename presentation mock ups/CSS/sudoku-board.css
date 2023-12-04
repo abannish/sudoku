@@ -1,0 +1,9 @@
+.grid-container {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(3,33%);
+    grid-template-rows: min-content;
+}
+.center-display {
+    padding: none;
+}

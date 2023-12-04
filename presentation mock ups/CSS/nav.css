@@ -1,0 +1,55 @@
+:root {
+    --navLinkColor: grey;
+    --navTextColor: white;
+    --navBorderColor: whitesmoke;
+    --navMargins: 0px;
+    --navPadding: 0px;
+}
+nav ul {
+    padding: 0em;
+    margin: 0em;
+    display: inline;
+}
+nav {
+    margin: var(--navMargins);
+    padding: var(--navPadding);
+    overflow-x: visible;
+    overflow-y: hidden;
+    white-space: nowrap;
+    min-width: fit-content;
+    max-height: 74px;
+    background-color: #333;
+}
+nav li {
+    float: left;
+    list-style-type: none;
+    display: inline;
+    margin: var(--navMargins);
+    padding: var(--navPadding);
+
+}
+nav li a {
+    display: block;
+    color: var(--navTextColor);
+    font-size: large;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition-property: all;
+    transition-duration: 1s;
+    background-color: var(--navLinkColor);
+    border-right: 2.5px solid var(--navBorderColor);
+
+}
+.float-right {
+    float: right;
+}
+.noRightBorder {
+    border-right: none;
+}
+nav li a:hover {
+    font-size: x-large;
+    padding: 22.75px 26px;
+    color: var(--navTextColor);
+    background-color: black;
+}

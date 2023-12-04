@@ -1,0 +1,79 @@
+html {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+:root {
+    --gridMargins: 20px;
+    --statTextAlignment: left;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: whitesmoke;
+}
+
+.gridWrapper {
+    display: grid;
+    grid-template-columns: repeat(3,33%);
+    grid-template-rows: min-content;
+    grid-template-areas: "a b c";
+}
+#PVPRankings {
+    grid-area: a;
+    margin: var(--gridMargins) var(--gridMargins);
+}
+#PVERankings {
+    grid-area: b;
+    margin: var(--gridMargins) var(--gridMargins);
+}
+#personalStats {
+    grid-area: c;
+    margin: var(--gridMargins) var(--gridMargins);
+}
+section h1 {
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 25px;
+    margin-left: 0px;
+    font-size: 40px;
+}
+section hr {
+    padding: auto;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    width: 95%;
+}
+.table-list {
+    border-bottom: 1px solid #ebebeb;
+    padding: 10px 8px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    vertical-align: inherit;
+    font-weight: bold;
+    display: table-cell;
+}
+td {
+    display: table-cell;
+}
+.card {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    background: #fff;
+    border-radius: 4px;
+    display: flex;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    width: 96%;
+}
+
+.list{
+    list-style-type: none;
+    margin: 0px;
+}
+
+

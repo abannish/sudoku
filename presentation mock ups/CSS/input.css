@@ -1,0 +1,27 @@
+
+.IWNL label {
+    display: block;
+    font-family: 'Times New Roman', Times, serif;
+    box-shadow: 10px 10px rbg(125, 249, 255);
+    font: optional;
+    text-align: left;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.IWNL input {
+    display: block;
+    border-radius: 7px;
+    text-align: left;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;;
+}
+
+/*
+   Input With New Line: new line between label and input elements
+*/
+.IWNL {
+    width: min-content;
+}
