@@ -1,9 +1,51 @@
 .grid-container {
-    border: 1px solid black;
+    padding: 0%;
+    border: .01em solid black;
     display: grid;
-    grid-template-columns: repeat(3,33%);
+    grid-template-columns: repeat(3,33.3333333%);
+    grid-template-rows: min-content;
+    text-align: center;
+    margin: 0rem;
+}
+.color-grid-container {
+    padding: 0%;
+    margin: 0%;
+    border: .01em solid black;
+    display: grid;
+    grid-template-columns: repeat(3,33.3333333%);
     grid-template-rows: min-content;
 }
+p {
+    border: .01em solid rgba(133, 130, 130,.5);
+    font-size: 1.5rem;
+    cursor: grab;
+    color: black;
+    margin: 0em;
+    padding: 30%;
+}
+p:hover {
+    background-color: black;
+    color: darkturquoise;
+}
+.horizontal-list {
+    display: inline;
+    border: .1em solid black;
+    padding: 1.25em;
+    padding-inline-start: 0em;
+    padding-inline-end: 0em;
+}
+
+.horizontal-list > * {
+    border: .1em solid rgba(133, 130, 130,.5);;
+    display: inline;
+    padding: 1.25em;
+    margin: 0em;
+}
+
+.horizontal-list li:hover{
+    color: red;
+}
+
 .center-display {
     padding: none;
 }
