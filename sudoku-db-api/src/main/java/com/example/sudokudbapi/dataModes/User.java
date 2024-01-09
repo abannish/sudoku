@@ -5,13 +5,12 @@ import java.util.Set;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -20,28 +19,29 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private long userId;
+    @Column(columnDefinition = "integer", name = "user_id", nullable = false)
+    private int userId;
 
     @NotNull
-    @Column(columnDefinition = "varchar(45)", name = "username")
+    @Column(columnDefinition = "varchar(45)", name = "username", nullable = false)
     @Pattern(regexp = "[A-Za-z1-9]{9-45}", message = "{invalid username}")
     private String username;
 
     @NotNull
-    @Column(columnDefinition = "varchar(255)", name = "password")
+    @Column(columnDefinition = "varchar(255)", name = "password", nullable = false)
     @Pattern(regexp = ".{9,255}", message = "{invalid password}")
     private String password;
 
     @NotNull
-    @Column(columnDefinition = "carchar(255)", name = "email")
+    @Column(columnDefinition = "varchar(255)", name = "email", nullable = false)
     @Pattern(regexp = ".+@.+\\..+", message = "{invalid email}")
     private String email;
 
-    @Column(columnDefinition = "integer default '0'", name = "pvpRank")
+    @Column(columnDefinition = "integer default '0'", name = "pvp_rank")
     private int pvpRank;
-    @Column(columnDefinition = "integer default '0'", name = "pveRank")
+    @Column(columnDefinition = "integer default '0'", name = "pve_rank")
     private int pveRank;
     @Column(columnDefinition = "integer default '0'", name = "pvp_wins")
     private int pvpWins;
@@ -53,13 +53,18 @@ public class User {
     private int totalPveGames;
     @Column(columnDefinition = "time default '0'", name = "time_played")
     private Time timePlayed;
-    @Column(columnDefinition = "Integer default '0'", name = "display_mode")
+
+    @Column(columnDefinition = "integer default '0'", name = "display_mode")
     private int displayMode;
 
-    // one game to many players
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private Set<Played_game> playedGames;
+    @OneToMany(cascade =  CascadeType.REMOVE, mappedBy = "userId")
+    private Set<Friend> friends;
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "gameId")
+    private Set<PlayedGame> playedGames;
+    
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "achievementId")
+    private Set<Achievement> achievments;
 
     // ================== getters ==================
 
@@ -111,62 +116,16 @@ public class User {
         return timePlayed;
     }
 
-    // ================== setters ==================
+    public Set<Achievement> getAchievements() {
+        return achievments;
+    }
 
-    public Set<Played_game> getPlayedGames() {
+    public Set<PlayedGame> getPlayedGames() {
         return playedGames;
     }
 
-    public void setUserId(long id) {
-        userId = id;
-    }
-
-    public void setUsername(String u) {
-        username = u;
-    }
-
-    public void setPassword(String p) {
-        password = p;
-    }
-
-    public void setEmail(String e) {
-        email = e;
-    }
-
-    public void setPvpRank(int r) {
-         pvpRank = r;
-    }
-
-    public void setPveRank(int r) {
-        pveRank = r;
-    }
-
-    public void setPvpWins(int w) {
-        pvpWins = w;
-    }
-
-    public void setPveWins(int w) {
-        pveWins = w;
-    }
-
-    public void setTotalPvpGames(int tpg) {
-        totalPvpGames = tpg;
-    }
-
-    public void setTotalPveGames(int tpg) {
-        totalPveGames = tpg;
-    }
-
-    public void setTimePlayed(Time t) {
-        timePlayed = t;
-    }
-
-    public void setDisplayMode(int dm) {
-        displayMode = dm;
-    }
-
-    public void setPlayedGames(Set<Played_game> games) {
-        playedGames = games;
+    public Set<Friend> getFriends() {
+        return friends;
     }
 
     @Override
@@ -204,6 +163,9 @@ public class User {
                 ",totalPveWins: " + getTotalPveGames() +
                 ",display_mode: " + getDisplayMode() +
                 ",timePlayed: " + getTimePlayed().toString() +
+                ",playedGames: " + getPlayedGames().toString() +
+                ",achievements: " + getAchievements().toString() +
+                ",friends: " + friends.toString() +
                 "}";
     }
 }
