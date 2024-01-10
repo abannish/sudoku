@@ -17,13 +17,15 @@ import org.springframework.http.MediaType;
 
 import org.springframework.test.web.servlet.MockMvc;
 
+//SpringBootTest annotation signals for the application context to be loaded.
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc // 
 public class AchievementControllerTest {
 
-    @Autowired 
+    @Autowired
     private MockMvc mockMvc;
 
+    // path to achievement controller
     private static final String REQ_PATH = "/api/achievement/"; 
 
     @Test

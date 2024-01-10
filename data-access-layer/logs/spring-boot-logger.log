@@ -983,3 +983,33 @@ Caused by: java.lang.IllegalArgumentException: Can not set int field com.example
 2024-01-09 18:09:05,809 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
 2024-01-09 18:09:05,814 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
 2024-01-09 18:09:05,814 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2024-01-09 18:14:31,129 INFO o.h.v.i.u.Version [background-preinit] HV000001: Hibernate Validator 8.0.1.Final
+2024-01-09 18:14:31,158 INFO o.s.b.StartupInfoLogger [main] Starting AchievementControllerTest using Java 17.0.9 with PID 7860 (started by OPB in C:\Users\OPB\Desktop\projects\sudoku\sudoku-db-api)
+2024-01-09 18:14:31,158 INFO o.s.b.StartupInfoLogger [main] Starting AchievementControllerTest using Java 17.0.9 with PID 7860 (started by OPB in C:\Users\OPB\Desktop\projects\sudoku\sudoku-db-api)
+2024-01-09 18:14:31,159 INFO o.s.b.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-01-09 18:14:31,159 INFO o.s.b.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-01-09 18:14:31,692 INFO o.s.d.r.c.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-09 18:14:31,749 INFO o.s.d.r.c.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 48 ms. Found 6 JPA repository interfaces.
+2024-01-09 18:14:32,095 INFO o.h.j.i.u.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-09 18:14:32,148 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 6.3.1.Final
+2024-01-09 18:14:32,192 INFO o.h.c.i.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
+2024-01-09 18:14:32,425 INFO o.s.o.j.p.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-09 18:14:32,450 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Starting...
+2024-01-09 18:14:32,450 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Starting...
+2024-01-09 18:14:32,684 INFO c.z.h.p.HikariPool [main] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@73da7f08
+2024-01-09 18:14:32,684 INFO c.z.h.p.HikariPool [main] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@73da7f08
+2024-01-09 18:14:32,686 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Start completed.
+2024-01-09 18:14:32,686 INFO c.z.h.HikariDataSource [main] HikariPool-1 - Start completed.
+2024-01-09 18:14:33,515 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-09 18:14:33,570 INFO o.s.o.j.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-09 18:14:33,876 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-09 18:14:34,184 INFO o.s.m.w.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2024-01-09 18:14:34,184 INFO o.s.w.s.FrameworkServlet [main] Initializing Servlet ''
+2024-01-09 18:14:34,186 INFO o.s.w.s.FrameworkServlet [main] Completed initialization in 1 ms
+2024-01-09 18:14:34,208 INFO o.s.b.StartupInfoLogger [main] Started AchievementControllerTest in 3.377 seconds (process running for 4.14)
+2024-01-09 18:14:34,208 INFO o.s.b.StartupInfoLogger [main] Started AchievementControllerTest in 3.377 seconds (process running for 4.14)
+2024-01-09 18:14:34,893 INFO o.s.o.j.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-09 18:14:34,895 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2024-01-09 18:14:34,895 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2024-01-09 18:14:34,901 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2024-01-09 18:14:34,901 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
