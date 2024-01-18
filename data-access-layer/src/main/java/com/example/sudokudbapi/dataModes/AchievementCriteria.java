@@ -1,9 +1,8 @@
 package com.example.sudokudbapi.dataModes;
 
-import jakarta.persistence.Table;
+import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.Table;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,14 +19,14 @@ public class AchievementCriteria {
     private int criteriaId;
 
     @Column(columnDefinition = "varchar(255)", name = "criteria_description")
-    private String criteraDescription;
+    private String criteriaDescription;
 
     public int getCriteriaId() {
         return criteriaId;
     }
 
     public String getCriteriaDescription() {
-        return criteraDescription;
+        return criteriaDescription;
     }
 
     @Override
@@ -52,12 +51,6 @@ public class AchievementCriteria {
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        }
-        catch(JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return objectToJson(this);
     }
 }

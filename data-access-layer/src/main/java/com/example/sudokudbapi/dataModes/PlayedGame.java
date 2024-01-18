@@ -3,8 +3,7 @@ package com.example.sudokudbapi.dataModes;
 import java.sql.Time;
 import java.util.Set;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,8 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /*
- * Description: Wrapper class for databse data to represent a "played game" of sudoku.
- *              Only getter functions are avavilable.
+ * Description: Wrapper class for database data to represent a "played game" of sudoku.
+ *              Only getter functions are available.
  * Table columns:
  *  gameId int
  *  userId int PK 
@@ -114,11 +113,6 @@ public class PlayedGame {
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return objectToJson(this);
     }
 }

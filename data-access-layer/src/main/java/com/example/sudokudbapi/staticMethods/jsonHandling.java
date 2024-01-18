@@ -3,7 +3,7 @@ package com.example.sudokudbapi.staticMethods;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public final class jsonHandling {
+public final class JsonHandling {
 
     private static ObjectMapper mapper = new ObjectMapper();
 

@@ -1,6 +1,6 @@
 package com.example.sudokudbapi.dataModes;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +35,7 @@ public class Achievement {
     @Column(columnDefinition = "integer", name = "criteria_value")
     private int criteriaValue;
 
-    public int getAchievmentId() {
+    public int getAchievementId() {
         return achievementId;
     }
     public byte[] getAchievementImage() {
@@ -44,13 +44,13 @@ public class Achievement {
     public AchievementCriteria getCriteria() {
         return achievementCriteria;
     }
-    public int getcriteriaValue() {
+    public int getCriteriaValue() {
         return criteriaValue;
     }
 
     @Override
     public int hashCode() {
-        return getAchievmentId() ^ getcriteriaValue() ^ getCriteria().hashCode();
+        return getAchievementId() ^ getCriteriaValue() ^ getCriteria().hashCode();
     }
 
     @Override
@@ -61,19 +61,13 @@ public class Achievement {
             return true;
         else if(o.getClass() == this.getClass()) {
             Achievement a = (Achievement) o;
-            return getAchievmentId() == a.getAchievmentId();
+            return getAchievementId() == a.getAchievementId();
         }
         return false;
     }
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this); 
-        }
-        catch(JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return objectToJson(this);
     }
 }

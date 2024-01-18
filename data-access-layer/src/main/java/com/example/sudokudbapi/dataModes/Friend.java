@@ -6,8 +6,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 import com.example.sudokudbapi.compositeKeys.FriendsPriKey;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 @Entity
 @Table(name = "Friends")
@@ -55,12 +55,6 @@ public class Friend {
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        }
-        catch(JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return objectToJson(this);
     }
 }

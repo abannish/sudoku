@@ -6,8 +6,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 import jakarta.persistence.Column;
 /*
@@ -60,12 +59,6 @@ public class Difficulty {
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        }
-        catch(JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+        return objectToJson(this);
     }
 }

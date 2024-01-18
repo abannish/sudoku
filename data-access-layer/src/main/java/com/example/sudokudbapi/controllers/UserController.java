@@ -22,7 +22,6 @@ import java.util.List;
 import com.example.sudokudbapi.dataModes.User;
 import com.example.sudokudbapi.repositories.UserRepo;
 
-import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/api/user")
