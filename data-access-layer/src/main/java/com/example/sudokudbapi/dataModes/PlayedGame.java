@@ -3,6 +3,9 @@ package com.example.sudokudbapi.dataModes;
 import java.sql.Time;
 import java.util.Set;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,7 +35,7 @@ public class PlayedGame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "integer", nullable = false)
+    @Column(columnDefinition = "integer", nullable = false, insertable = false)
     private int gameId;
 
     @Column(columnDefinition = "blob", name = "move_set", nullable = false)
@@ -49,11 +52,22 @@ public class PlayedGame {
     private Difficulty difficulty;
 
     @Column(columnDefinition = "boolean default false", name = "finished", nullable = false)
-    private boolean finished;
+    private Boolean finished;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User player;
+
+    public PlayedGame() {}
+
+    public PlayedGame(Set<Set<Integer>> moveSet, Set<Set<Integer>> boardSet,Time time, Difficulty difficulty,Boolean finished, User player) {
+        this.moveSet = moveSet;
+        this.boardSet = boardSet;
+        this.timeTaken = time;
+        this.difficulty = difficulty;
+        this.finished = finished;
+        this.player = player;
+    }
 
     public long getGameId() {
         return gameId;
@@ -100,13 +114,11 @@ public class PlayedGame {
 
     @Override
     public String toString() {
-        return "{" +
-                " GameId: " + getGameId() + 
-                ", moveSet: " + getMoveSet().toString() +
-                ", boardSet: " + getMoveSet().toString() +
-                ", timeTaken: " + getTimeTaken().toString() +
-                ", difficulty: " + getDifficulty().toString() +
-                ", finished: " + getFinished() +
-                "}";
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

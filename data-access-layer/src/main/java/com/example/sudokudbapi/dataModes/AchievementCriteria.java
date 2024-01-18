@@ -1,6 +1,10 @@
 package com.example.sudokudbapi.dataModes;
 
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +16,7 @@ import jakarta.persistence.GenerationType;
 public class AchievementCriteria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "integer", name = "criteria_id", nullable = false)
+    @Column(columnDefinition = "integer", name = "criteria_id", nullable = false, insertable = false)
     private int criteriaId;
 
     @Column(columnDefinition = "varchar(255)", name = "criteria_description")
@@ -48,9 +52,12 @@ public class AchievementCriteria {
 
     @Override
     public String toString() {
-        return "{" +
-        "criteraId: " + getCriteriaId() +
-        ",criteraDescription: " + getCriteriaDescription() +
-        "}";
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        }
+        catch(JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

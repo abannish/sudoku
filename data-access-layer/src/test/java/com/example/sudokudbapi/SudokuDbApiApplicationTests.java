@@ -13,7 +13,7 @@ class SudokuDbApiApplicationTests {
 	SudokuDbApiApplication context;
 
 	@Test
-	void contextLoads() {
+	void contextLoadsTest() {
 		assertThat(context).isNotNull();
 	}
 

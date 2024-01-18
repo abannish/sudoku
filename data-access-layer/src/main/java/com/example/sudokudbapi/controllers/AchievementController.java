@@ -31,7 +31,7 @@ public class AchievementController {
     public List<Achievement> findAllAchievements() {
 
         logger.debug("GET/api/achievement/:accessed");
-
+        
         return (List<Achievement>) achievementRepo.findAll();
     }
 

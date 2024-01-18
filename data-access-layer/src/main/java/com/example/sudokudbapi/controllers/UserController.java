@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable(value = "id") @NotNull long id) {
+    public ResponseEntity<User> findUserById(@PathVariable(value = "id")  long id) {
 
         logger.debug("GET/api/user/{}:accessed",id);
 
@@ -60,31 +60,50 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/{username}{password}")
+    public ResponseEntity<User> findUserByUserAndPass(@PathVariable(value = "username")  String username,@PathVariable(value = "password")  String password) {
+
+        logger.debug("GET/api/user/{}:{}:accessed",username,password);
+
+        Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
+
+        if (user.isPresent()) {
+
+            logger.debug("GET/api/user/{}:success:{}",username, user.get().toString());
+
+            return ResponseEntity.ok().body(user.get());
+        }
+
+        logger.debug("GET/api/user/{}:{}:not found",username,password);
+
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping
-    public ResponseEntity<URI> saveUser(@Validated @RequestBody @NotNull User user) {
-
+    public ResponseEntity<URI> saveUser(@Validated @RequestBody User user) throws Exception {
         try {
-
-            ResponseEntity<URI> respose = ResponseEntity.created(new URI("/api/user/id="+user.getUserId())).build();
-
-            userRepository.save(user);
+            
+            user = userRepository.save(user);
 
             logger.debug("POST/api/user/:saved:{}",user.getUserId());
             
-            return respose;
-        }
-        catch(URISyntaxException e) {
-            logger.error("POST/api/user", e);
-        }
-        finally{
-            logger.error("POST/api/user/{}",user.getUserId());
+            return ResponseEntity.ok().body(new URI("/api/user/id="+user.getUserId()));
         }
 
-        return ResponseEntity.badRequest().build();
+        catch(URISyntaxException e) {
+
+            logger.error("POST/api/user", e);
+
+        }
+        finally {
+            logger.error("POST/api/user/{}",user);
+        }
+
+        return ResponseEntity.badRequest().body(new URI("/bad/request/id="+user.getUserId()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable(value = "id") @NotNull long id) {
+    public ResponseEntity<User> deleteUser(@PathVariable(value = "id")  long id) {
 
         logger.debug("DELTE/api/user/{}:accessed",id);
 

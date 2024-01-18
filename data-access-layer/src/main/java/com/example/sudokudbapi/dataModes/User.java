@@ -3,6 +3,9 @@ package com.example.sudokudbapi.dataModes;
 import java.sql.Time;
 import java.util.Set;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.persistence.CascadeType;
@@ -21,7 +24,7 @@ public class User {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "integer", name = "user_id", nullable = false)
+    @Column(columnDefinition = "integer", name = "user_id", nullable = false, insertable = false)
     private int userId;
 
     @NotNull
@@ -57,15 +60,23 @@ public class User {
     @Column(columnDefinition = "integer default '0'", name = "display_mode")
     private int displayMode;
 
-    @OneToMany(cascade =  CascadeType.REMOVE, mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "userId")
     private Set<Friend> friends;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "gameId")
     private Set<PlayedGame> playedGames;
-    
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "achievementId")
-    private Set<Achievement> achievments;
 
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "achievementId")
+    private Set<Achievement> achievements;
+
+    public User() {
+    }
+
+    public User(String username, String pass, String email) {
+        this.username = username;
+        this.password = pass;
+        this.email = email;
+    }
     // ================== getters ==================
 
     public long getUserId() {
@@ -117,7 +128,7 @@ public class User {
     }
 
     public Set<Achievement> getAchievements() {
-        return achievments;
+        return achievements;
     }
 
     public Set<PlayedGame> getPlayedGames() {
@@ -150,22 +161,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "{" +
-                "userId: " + getUserId() +
-                ",username: " + getUsername() +
-                ",password: " + getPassword() +
-                ",email: " + getEmail() +
-                ",pvpRank: " + getPvpWins() +
-                ",pveRank: " + getPveRank() +
-                ",pvpWins: " + getPvpWins() +
-                ",pveWinds: " + getPveWins() +
-                ",totalPvpWins: " + getTotalPvpGames() +
-                ",totalPveWins: " + getTotalPveGames() +
-                ",display_mode: " + getDisplayMode() +
-                ",timePlayed: " + getTimePlayed().toString() +
-                ",playedGames: " + getPlayedGames().toString() +
-                ",achievements: " + getAchievements().toString() +
-                ",friends: " + friends.toString() +
-                "}";
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

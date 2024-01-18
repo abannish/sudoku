@@ -5,6 +5,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.persistence.Column;
 /*
  */
@@ -15,12 +19,19 @@ public class Difficulty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "integer", name = "difficulty_id")
+    @Column(columnDefinition = "integer", name = "difficulty_id", insertable = false)
     private int difficultyId;
 
     @Column(columnDefinition = "varchar(255)", name = "difficulty_name")
     private String difficultyName;
     
+    public Difficulty() {}
+
+    public Difficulty(int difficultyId, String difficultyName) {
+        this.difficultyId = difficultyId;
+        this.difficultyName = difficultyName;
+    }
+
     public int getDifficultyId() {
         return difficultyId;
     }
@@ -49,9 +60,12 @@ public class Difficulty {
 
     @Override
     public String toString() {
-        return "{" +
-            "difficultyId: " + getDifficultyId() +
-            ",difficultyName: " + getDifficultyName() +
-        "}";
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        }
+        catch(JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

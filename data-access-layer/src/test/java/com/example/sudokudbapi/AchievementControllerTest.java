@@ -1,7 +1,6 @@
 package com.example.sudokudbapi;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.contains;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +28,7 @@ public class AchievementControllerTest {
     private static final String REQ_PATH = "/api/achievement/"; 
 
     @Test
-    public void loadContext() throws Exception {
+    public void contextLoadsTest() throws Exception {
         assertThat(mockMvc).isNotNull();
     }
 
@@ -45,7 +44,7 @@ public class AchievementControllerTest {
 
     @Test
     public void getAchievementWithFailure() throws Exception {
-        long nonExistentId = 0;                                             
+        long nonExistentId = 0L;                                             
         mockMvc.perform(get(REQ_PATH + nonExistentId)).andDo(print()).andExpect(status().isNotFound());
     }
 }

@@ -60,13 +60,13 @@ public class PlayedGameController {
     }
 
     @PostMapping
-    public ResponseEntity<URI> savGame(@Validated @RequestBody @NotNull PlayedGame playedGame) {
+    public ResponseEntity<URI> saveGame(@Validated @RequestBody @NotNull PlayedGame playedGame) {
 
         try {
 
-            ResponseEntity<URI> respose = ResponseEntity.created(new URI("/api/playedGame/"+playedGame.getGameId())).build();
+            playedGame = gameRepo.save(playedGame);
 
-            gameRepo.save(playedGame);
+            ResponseEntity<URI> respose = ResponseEntity.created(new URI("/api/playedGame/id="+playedGame.getGameId())).build();
 
             logger.debug("POST/api/playedGame/:saved:{}",playedGame.getGameId());
             
