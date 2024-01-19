@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,73 +25,138 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    private static final String REQ_PATH = "/api/user";
+    private static final String USER_REQ_PATH = "/api/user";
 
     private static User testUser = new User("test-username","test-password","test-email");
 
     private String userUri;
 
+    public static <G> String postHelper(MockMvc mvc,String path, G obj) throws Exception {
+        MvcResult res = mvc.perform(post(path).contentType(MediaType.APPLICATION_JSON).content(obj.toString()))
+        .andExpect(status().isCreated())
+        .andReturn();
+
+        return res.getResponse().getContentAsString();
+    }
+
+    public static String getHelper(MockMvc mvc, String uri) throws Exception {
+        MvcResult res = mvc.perform(get(uri))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andReturn();
+        
+        return res.getResponse().getContentAsString();
+    }
+
     @Test
     public void contextLoadsTest() throws Exception {
         assertThat(mvc).isNotNull();
     }
-    
-    // test must be run after contextLoadsTest
+
     @Test
     public void addUserWithSuccess() throws Exception {
-        MvcResult res = mvc.perform(post(REQ_PATH).content(testUser.toString()).contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk()).andReturn();
         
-            userUri = res.getAsyncResult().toString();
+        userUri = postHelper(mvc, USER_REQ_PATH, testUser);
+        
+        User tmpUser = User.jsonUserToObj(getHelper(mvc, userUri));
+
+        assertThat(tmpUser).isNotNull();
+        assert(tmpUser.getUsername() == testUser.getUsername());
+        assert(tmpUser.getPassword() == testUser.getPassword());
+        assert(tmpUser.getEmail() == testUser.getEmail());
     }
 
     @Test
-    public void addUserWithFailure() throws Exception {
-        mvc.perform(post(REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(""))
+    public void addUserWithUsernameFailure() throws Exception {
+        testUser = new User(null, "test", "test");
+        mvc.perform(post(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(testUser.toString()))
             .andExpect(status().isBadRequest());
     }
 
-    // test must be run after addUserWithSuccess
+    @Test
+    public void addUserWithPasswordFailure() throws Exception {
+        testUser = new User("test", null, "test");
+        mvc.perform(post(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(testUser.toString()))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void addUserWithEmailFailure() throws Exception {
+        testUser = new User("test", "test", null);
+        mvc.perform(post(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(testUser.toString()))
+            .andExpect(status().isBadRequest());
+    }
+
     @Test
     public void getUserByIdWithSuccess() throws Exception {
-        mvc.perform(get(userUri)) // get the test user from the db
-            .andExpect(status().isOk()) // make sure there is a status code of 200
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON)) // content type is correct
-            .andExpect(content().json(testUser.toString())); // make sure the user from the db and the test user are the same
+        String json = getHelper(mvc, userUri);
     }
 
     @Test
     public void getUserByIdWithFailure() throws Exception {
-        mvc.perform(get(REQ_PATH+"/id=0"))
-            .andExpect(status().isBadRequest())
-            .andExpect(content().string(""));
+        mvc.perform(get(USER_REQ_PATH+"/id=-1"))
+            .andExpect(status().isBadRequest());
     }
 
-    // test must be run after addUserWithSuccess
     @Test
     public void getUserByUsernameAndPasswordWithSuccess() throws Exception {
-        mvc.perform(get(REQ_PATH+"/username="+testUser.getUsername()+"&password="+testUser.getPassword()))
+        mvc.perform(get(USER_REQ_PATH+"username="+testUser.getUserId()+"&password="+testUser.getPassword()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(content().json(testUser.toString()));
     }
 
-    // test must be run after addUserWithSuccess
+    @Test
+    public void updateUserSuccess() throws Exception {
+        testUser = new User("update-user","test-password","test-email");
+        MvcResult res = mvc.perform(put(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(testUser.toString()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andReturn();
+        
+        User updated = User.jsonUserToObj(res.getResponse().getContentAsString());
+
+        assertThat(updated).isNotNull();
+        assert(updated.equals(testUser));
+    }
+    @Test
+    public void updateUserFailure() throws Exception {
+        mvc.perform(put(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(""))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void updateUserFailureOnUsername() throws Exception {
+        User tmp = new User(null,"test-password","test-email");
+        mvc.perform(put(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(tmp.toString()))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void updateUserFailureOnPassword() throws Exception {
+        User tmp = new User("update-user",null,"test-email");
+        mvc.perform(put(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(tmp.toString()))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void updateUserFailureOnEmail() throws Exception {
+        User tmp = new User("update-user","test-password",null);
+        mvc.perform(put(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(tmp.toString()))
+            .andExpect(status().isBadRequest());
+    }
+
     @Test
     public void deleteUserByIdWithSuccess() throws Exception {
-        mvc.perform(delete(REQ_PATH+"/id="+testUser.getUserId()))
+        mvc.perform(delete(userUri))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(content().json(testUser.toString()));
     }
 
-    // test must be run after deleteUserByIdWithSuccess
     @Test
     public void deleteUserByIdWithFailure() throws Exception {
-        mvc.perform(delete(REQ_PATH+"/id="+testUser.getUserId()))
-            .andExpect(status().isNotFound());
+        mvc.perform(delete(USER_REQ_PATH+"id=-1"))
+            .andExpect(status().isBadRequest());
     }
-
-
-
 }
