@@ -52,10 +52,10 @@ public class FriendController {
         return (List<Friend>) friendRepo.saveAll(newFriends);
     }
 
-    @PutMapping
+    @PostMapping
     public ResponseEntity<URI> addFriend(@Validated @RequestBody @NotNull Friend newFriend) {
 
-        friendRepo.save(newFriend);
+        newFriend = friendRepo.save(newFriend);
 
         Friend inverseNewFriend = new Friend(newFriend.getFriendId(), newFriend.getUserId());
 
@@ -63,9 +63,9 @@ public class FriendController {
 
         try {
             
-            URI respose = new URI("/api/friends/userId="+newFriend.getUserId()+"&friendId="+newFriend.getFriendId());
+            URI res = new URI("/api/friends/userId="+newFriend.getUserId()+"&friendId="+newFriend.getFriendId());
 
-            return ResponseEntity.created(respose).build();
+            return ResponseEntity.created(res).build();
         }
         
         catch (URISyntaxException e) {

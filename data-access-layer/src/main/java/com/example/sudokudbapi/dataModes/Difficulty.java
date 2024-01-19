@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+import static com.example.sudokudbapi.staticMethods.JsonHandling.jsonToObject;
 import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 import jakarta.persistence.Column;
@@ -26,8 +27,7 @@ public class Difficulty {
     
     public Difficulty() {}
 
-    public Difficulty(int difficultyId, String difficultyName) {
-        this.difficultyId = difficultyId;
+    public Difficulty( String difficultyName) {
         this.difficultyName = difficultyName;
     }
 
@@ -60,5 +60,9 @@ public class Difficulty {
     @Override
     public String toString() {
         return objectToJson(this);
+    }
+
+    public static Difficulty jsonDifficultyToObj(String json) {
+        return jsonToObject(json,new Difficulty());
     }
 }

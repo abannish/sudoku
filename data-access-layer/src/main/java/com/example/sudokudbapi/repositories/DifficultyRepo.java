@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.example.sudokudbapi.dataModes.Difficulty;
 
 @Repository
-public interface DifficultyRepo extends CrudRepository<Difficulty, Long> {}
+public interface DifficultyRepo extends CrudRepository<Difficulty, Integer> {}

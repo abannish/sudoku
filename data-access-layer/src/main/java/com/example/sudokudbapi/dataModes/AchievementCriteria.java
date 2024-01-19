@@ -1,5 +1,6 @@
 package com.example.sudokudbapi.dataModes;
 
+import static com.example.sudokudbapi.staticMethods.JsonHandling.jsonToObject;
 import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 import jakarta.persistence.Table;
@@ -20,6 +21,12 @@ public class AchievementCriteria {
 
     @Column(columnDefinition = "varchar(255)", name = "criteria_description")
     private String criteriaDescription;
+
+    protected AchievementCriteria() {}
+
+    public AchievementCriteria(String description) {
+        criteriaDescription = description;
+    }
 
     public int getCriteriaId() {
         return criteriaId;
@@ -52,5 +59,9 @@ public class AchievementCriteria {
     @Override
     public String toString() {
         return objectToJson(this);
+    }
+
+    public static AchievementCriteria jsonAchievementCriteriaToObj(String json) {
+        return jsonToObject(json,new AchievementCriteria());
     }
 }

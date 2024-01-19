@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.example.sudokudbapi.dataModes.Achievement;
 
 @Repository
-public interface AchievementRepo extends CrudRepository<Achievement, Long> {}
+public interface AchievementRepo extends CrudRepository<Achievement, Integer> {}

@@ -14,8 +14,6 @@ import java.util.Optional;
 
 import com.example.sudokudbapi.repositories.AchievementRepo;
 
-import jakarta.validation.constraints.NotNull;
-
 import com.example.sudokudbapi.dataModes.Achievement;
 
 @RestController
@@ -36,8 +34,7 @@ public class AchievementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Achievement> findAchievement(@PathVariable(name = "id") @NotNull long id) {
-
+    public ResponseEntity<Achievement> findAchievement(@PathVariable(name = "id") int id) {
         logger.debug("GET/api/achievement/{}:accesed", id);
 
         Optional<Achievement> achievement = achievementRepo.findById(id);

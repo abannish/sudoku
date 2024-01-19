@@ -22,7 +22,6 @@ import java.util.List;
 import com.example.sudokudbapi.dataModes.User;
 import com.example.sudokudbapi.repositories.UserRepo;
 
-
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -41,70 +40,68 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable(value = "id")  long id) {
+    public ResponseEntity<User> findUserById(@PathVariable(value = "id") int id) {
 
-        logger.debug("GET/api/user/{}:accessed",id);
+        logger.debug("GET/api/user/{}:accessed", id);
 
         Optional<User> user = userRepository.findById(id);
 
         if (user.isPresent()) {
 
-            logger.debug("GET/api/user/{}:success:{}",id, user.get().toString());
+            logger.debug("GET/api/user/{}:success:{}", id, user.get().toString());
 
             return ResponseEntity.ok().body(user.get());
         }
 
-        logger.debug("GET/api/user/{}:not found",id);
+        logger.debug("GET/api/user/{}:not found", id);
 
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{username}{password}")
-    public ResponseEntity<User> findUserByUserAndPass(@PathVariable(value = "username")  String username,@PathVariable(value = "password")  String password) {
+    public ResponseEntity<User> findUserByUserAndPass(@PathVariable(value = "username") String username,
+            @PathVariable(value = "password") String password) {
 
-        logger.debug("GET/api/user/{}:{}:accessed",username,password);
+        logger.debug("GET/api/user/{}:{}:accessed", username, password);
 
         Optional<User> user = userRepository.findByUsernameAndPassword(username, password);
 
         if (user.isPresent()) {
 
-            logger.debug("GET/api/user/{}:success:{}",username, user.get().toString());
+            logger.debug("GET/api/user/{}:success:{}", username, user.get().toString());
 
             return ResponseEntity.ok().body(user.get());
         }
 
-        logger.debug("GET/api/user/{}:{}:not found",username,password);
+        logger.debug("GET/api/user/{}:{}:not found", username, password);
 
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<URI> saveUser(@Validated @RequestBody User user) throws Exception {
+    public ResponseEntity<URI> saveUser(@Validated @RequestBody User user) {
+
+        user = userRepository.save(user);
+
+        logger.debug("POST/api/user/:saved:{}", user.getUserId());
+
         try {
-            
-            user = userRepository.save(user);
 
-            logger.debug("POST/api/user/:saved:{}",user.getUserId());
-            
-            return ResponseEntity.ok().body(new URI("/api/user/id="+user.getUserId()));
+            return ResponseEntity.ok().body(new URI("/api/user/id=" + user.getUserId()));
         }
-
-        catch(URISyntaxException e) {
+        catch (URISyntaxException e) {
 
             logger.error("POST/api/user", e);
 
         }
-        finally {
-            logger.error("POST/api/user/{}",user);
-        }
 
-        return ResponseEntity.badRequest().body(new URI("/bad/request/id="+user.getUserId()));
+        return ResponseEntity.badRequest().body(URI.create("/bad/request/id=" + user.getUserId()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable(value = "id")  long id) {
+    public ResponseEntity<User> deleteUser(@PathVariable(value = "id") int id) {
 
-        logger.debug("DELTE/api/user/{}:accessed",id);
+        logger.debug("DELETE/api/user/{}:accessed", id);
 
         Optional<User> maybeUser = userRepository.findById(id);
 
@@ -113,13 +110,13 @@ public class UserController {
 
             userRepository.delete(u);
 
-            logger.debug("DELTE/api/user/:deleted:{}", u.toString());
+            logger.debug("DELETE/api/user/:deleted:{}", u.toString());
 
             return ResponseEntity.ok().body(u);
         }
 
-        logger.debug("DELTE/api/user/:not found");
-        
+        logger.debug("DELETE/api/user/:not found");
+
         return ResponseEntity.notFound().build();
     }
 }

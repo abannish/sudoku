@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import jakarta.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +41,7 @@ public class PlayedGameController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlayedGame> findGame(@PathVariable(value = "id") @NotNull long id) {
+    public ResponseEntity<PlayedGame> findGame(@PathVariable(value = "id") int id) {
         logger.debug("GET/api/playedGame/{}:accessed",id);
 
         Optional<PlayedGame> game = gameRepo.findById(id);
@@ -60,11 +59,11 @@ public class PlayedGameController {
     }
 
     @PostMapping
-    public ResponseEntity<URI> saveGame(@Validated @RequestBody @NotNull PlayedGame playedGame) {
+    public ResponseEntity<URI> saveGame(@Validated @RequestBody  PlayedGame playedGame) {
+
+        playedGame = gameRepo.save(playedGame);
 
         try {
-
-            playedGame = gameRepo.save(playedGame);
 
             ResponseEntity<URI> respose = ResponseEntity.created(new URI("/api/playedGame/id="+playedGame.getGameId())).build();
 
@@ -83,7 +82,7 @@ public class PlayedGameController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PlayedGame> deleteGame(@PathVariable(value = "id") @NotNull long id) {
+    public ResponseEntity<PlayedGame> deleteGame(@PathVariable(value = "id") int id) {
 
         logger.debug("DELTE/api/playedGame/{}:accessed",id);
 

@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 
 import com.example.sudokudbapi.compositeKeys.FriendsPriKey;
 
+import static com.example.sudokudbapi.staticMethods.JsonHandling.jsonToObject;
 import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 @Entity
@@ -56,5 +57,9 @@ public class Friend {
     @Override
     public String toString() {
         return objectToJson(this);
+    }
+
+    public static Friend jsonFriendToObj(String json) {
+        return jsonToObject(json,new Friend());
     }
 }

@@ -3,6 +3,7 @@ package com.example.sudokudbapi.dataModes;
 import java.sql.Time;
 import java.util.Set;
 
+import static com.example.sudokudbapi.staticMethods.JsonHandling.jsonToObject;
 import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 import jakarta.validation.constraints.NotNull;
@@ -68,8 +69,7 @@ public class User {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "achievementId")
     private Set<Achievement> achievements;
 
-    public User() {
-    }
+    protected User() { }
 
     public User(String username, String pass, String email) {
         this.username = username;
@@ -161,5 +161,9 @@ public class User {
     @Override
     public String toString() {
         return objectToJson(this);
+    }
+
+    public static User jsonUserToObj(String json) {
+        return jsonToObject(json,new User());
     }
 }

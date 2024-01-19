@@ -3,6 +3,7 @@ package com.example.sudokudbapi.dataModes;
 import java.sql.Time;
 import java.util.Set;
 
+import static com.example.sudokudbapi.staticMethods.JsonHandling.jsonToObject;
 import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 import jakarta.persistence.Column;
@@ -114,5 +115,9 @@ public class PlayedGame {
     @Override
     public String toString() {
         return objectToJson(this);
+    }
+
+    public static PlayedGame jsonPlayedGameToObj(String json) {
+        return jsonToObject(json,new PlayedGame());
     }
 }
