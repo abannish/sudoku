@@ -13,7 +13,7 @@ public final class JsonHandling {
 
         try {
             Object tmp = mapper.readValue(json,dataType.getClass());
-            res = tmp != null && tmp.getClass() != dataType.getClass() ? (G) tmp : null;
+            res = tmp != null && tmp.getClass() == dataType.getClass() ? (G) tmp : null;
         }
         catch(JsonProcessingException e) {
             e.printStackTrace();
