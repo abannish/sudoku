@@ -26,7 +26,7 @@ import com.example.sudokudbapi.dataModes.AchievementCriteria;
 // All tests must happen in sequence, later tests have dependencies on previous tests succeeding
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AchievementControllerTest {
+public class AchievementControllerTests {
 
     @Autowired
     private MockMvc mvc;
