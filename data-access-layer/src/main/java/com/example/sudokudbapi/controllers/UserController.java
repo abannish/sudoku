@@ -77,16 +77,7 @@ public class UserController {
 
         logger.debug("POST/api/user/:saved:{}", user.getUserId());
 
-        try {
-            return ResponseEntity.ok().body(new URI("/api/user/id=" + user.getUserId()));
-        }
-        catch (URISyntaxException e) {
-
-            logger.error("POST/api/user", e);
-
-        }
-
-        return ResponseEntity.badRequest().body(URI.create("/bad/request/id=" + user.getUserId()));
+        return ResponseEntity.created(URI.create("/api/user/id=" + user.getUserId())).build();
     }
 
     @DeleteMapping("/{id}")

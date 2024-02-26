@@ -29,7 +29,7 @@ public class User {
 
     @NotNull
     @Column(columnDefinition = "varchar(45)", name = "username", nullable = false)
-    @Pattern(regexp = "[A-Za-z1-9]{9-45}", message = "{invalid username}")
+    //@Pattern(regexp = "[A-Za-z]{9-45}", message = "{invalid username}")
     private String username;
 
     @NotNull
