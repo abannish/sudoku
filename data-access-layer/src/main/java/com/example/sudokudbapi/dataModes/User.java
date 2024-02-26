@@ -18,7 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "USERS")
 public class User {
 
     @Id
@@ -54,7 +54,7 @@ public class User {
     private int totalPvpGames;
     @Column(columnDefinition = "integer default '0'", name = "total_pve_games")
     private int totalPveGames;
-    @Column(columnDefinition = "time default '0'", name = "time_played")
+    @Column(columnDefinition = "time default '00:00:00'", name = "time_played")
     private Time timePlayed;
 
     @Column(columnDefinition = "integer default '0'", name = "display_mode")

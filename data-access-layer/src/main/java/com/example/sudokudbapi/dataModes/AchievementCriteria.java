@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
 
 @Entity
-@Table(name = "Achievement_criteria")
+@Table(name = "ACHIEVEMENT_CRITERIA")
 public class AchievementCriteria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

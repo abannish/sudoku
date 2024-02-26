@@ -35,7 +35,7 @@ public class AchievementController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Achievement> findAchievement(@PathVariable(name = "id") int id) {
-        logger.debug("GET/api/achievement/{}:accesed", id);
+        logger.debug("GET/api/achievement/{}:accessed", id);
 
         Optional<Achievement> achievement = achievementRepo.findById(id);
 

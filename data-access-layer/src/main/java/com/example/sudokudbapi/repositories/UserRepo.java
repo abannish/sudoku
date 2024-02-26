@@ -11,4 +11,5 @@ import com.example.sudokudbapi.dataModes.User;
 public interface UserRepo extends CrudRepository<User, Integer> {
 
     Optional<User> findByUsernameAndPassword(String username, String password);
+    
 }

@@ -1,7 +1,12 @@
 package com.example.sudokudbapi.dataModes;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
+
+import org.hibernate.annotations.GeneratedColumn;
 
 import static com.example.sudokudbapi.staticMethods.JsonHandling.jsonToObject;
 import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
@@ -14,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /*
@@ -30,12 +36,12 @@ import jakarta.persistence.Table;
  */
 
 @Entity
-@Table(name = "Played_game")
+@Table(name = "PLAYED_GAMES")
 public class PlayedGame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "integer", nullable = false, insertable = false)
+    @Column(columnDefinition = "integer", nullable = false)
     private int gameId;
 
     @Column(columnDefinition = "blob", name = "move_set", nullable = false)
@@ -46,7 +52,7 @@ public class PlayedGame {
     
     @Column(columnDefinition = "time", name = "time_taken", nullable = false)
     private Time timeTaken;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "difficulty", referencedColumnName = "difficulty_id", nullable = false)
     private Difficulty difficulty;

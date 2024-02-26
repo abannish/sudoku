@@ -1,6 +1,10 @@
 package com.example.sudokudbapi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,11 +37,13 @@ public class PlayedGameController {
     PlayedGameRepo gameRepo;
 
     @GetMapping
-    public List<PlayedGame> findAllGames() {
-
-        logger.debug("GET/api/playedGame/:accessed:success");
-
-        return (List<PlayedGame>) gameRepo.findAll();
+    public ResponseEntity<List<PlayedGame>> getAllGames(Pageable pageable) {
+        Page<PlayedGame> page = gameRepo.findAllByUserId(
+                PageRequest.of(pageable.getPageNumber(), 
+                               pageable.getPageSize(),
+                               pageable.getSortOr(Sort.by(Sort.Direction.ASC,"difficulty"))), 0);
+        
+        return ResponseEntity.ok().body(page.getContent());
     }
 
     @GetMapping("/{id}")
@@ -58,6 +64,7 @@ public class PlayedGameController {
         return ResponseEntity.notFound().build();
     }
 
+    @SuppressWarnings("null")
     @PostMapping
     public ResponseEntity<URI> saveGame(@Validated @RequestBody  PlayedGame playedGame) {
 
@@ -65,11 +72,11 @@ public class PlayedGameController {
 
         try {
 
-            ResponseEntity<URI> respose = ResponseEntity.created(new URI("/api/playedGame/id="+playedGame.getGameId())).build();
+            ResponseEntity<URI> response = ResponseEntity.created(new URI("/api/playedGame/id="+playedGame.getGameId())).build();
 
             logger.debug("POST/api/playedGame/:saved:{}",playedGame.getGameId());
             
-            return respose;
+            return response;
         }
         catch(URISyntaxException e) {
             logger.error("POST/api/playedGame", e);

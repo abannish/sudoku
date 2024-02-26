@@ -32,13 +32,13 @@
     </appender>
     
     <!-- LOG everything at INFO level -->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>
 
     <!-- LOG "com.*" at TRACE level -->
-    <logger name="com" level="debug" >
+    <logger name="com" level="info" >
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>

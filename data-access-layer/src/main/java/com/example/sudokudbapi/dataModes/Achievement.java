@@ -16,9 +16,8 @@ import jakarta.persistence.Table;
  * Description: Wrapper class for a achievement in sudoku. This class only contains attributes and getters.
  * 
  */
-
 @Entity
-@Table(name = "Achievements")
+@Table(name = "ACHIEVEMENTS")
 public class Achievement {
     
     @Id

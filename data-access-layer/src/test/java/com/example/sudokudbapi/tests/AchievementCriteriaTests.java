@@ -1,4 +1,4 @@
-package com.example.sudokudbapi;
+package com.example.sudokudbapi.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

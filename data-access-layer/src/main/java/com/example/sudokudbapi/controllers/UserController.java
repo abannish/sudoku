@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import com.example.sudokudbapi.dataModes.User;
 import com.example.sudokudbapi.repositories.UserRepo;
@@ -30,14 +29,6 @@ public class UserController {
 
     @Autowired
     private UserRepo userRepository;
-
-    @GetMapping
-    public List<User> findAllUsers() {
-
-        logger.debug("GET/api/user/:accessed:success");
-
-        return (List<User>) userRepository.findAll();
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findUserById(@PathVariable(value = "id") int id) {
@@ -78,6 +69,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    @SuppressWarnings("null")
     @PostMapping
     public ResponseEntity<URI> saveUser(@Validated @RequestBody User user) {
 
@@ -86,7 +78,6 @@ public class UserController {
         logger.debug("POST/api/user/:saved:{}", user.getUserId());
 
         try {
-
             return ResponseEntity.ok().body(new URI("/api/user/id=" + user.getUserId()));
         }
         catch (URISyntaxException e) {
@@ -99,20 +90,21 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable(value = "id") int id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable(value = "id") int id) {
 
         logger.debug("DELETE/api/user/{}:accessed", id);
 
         Optional<User> maybeUser = userRepository.findById(id);
 
         if (maybeUser.isPresent()) {
+
             User u = maybeUser.get();
 
             userRepository.delete(u);
 
             logger.debug("DELETE/api/user/:deleted:{}", u.toString());
 
-            return ResponseEntity.ok().body(u);
+            return ResponseEntity.ok().build();
         }
 
         logger.debug("DELETE/api/user/:not found");

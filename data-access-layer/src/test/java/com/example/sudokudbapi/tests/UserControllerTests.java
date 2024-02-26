@@ -1,4 +1,4 @@
-package com.example.sudokudbapi;
+package com.example.sudokudbapi.tests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class UserControllerTests {
 
     @Autowired
     private MockMvc mvc;
 
     private static final String USER_REQ_PATH = "/api/user";
-
-    private static User testUser = new User("test-username","test-password","test-email");
 
     private String userUri;
 
@@ -56,6 +54,8 @@ public class UserControllerTest {
     @Test
     public void addUserWithSuccess() throws Exception {
         
+        User testUser = new User("test-username","test-password","test-email");
+
         userUri = postHelper(mvc, USER_REQ_PATH, testUser);
         
         User tmpUser = User.jsonUserToObj(getHelper(mvc, userUri));
@@ -68,21 +68,21 @@ public class UserControllerTest {
 
     @Test
     public void addUserWithUsernameFailure() throws Exception {
-        testUser = new User(null, "test", "test");
+        User testUser = new User(null,"test-password","test-email");
         mvc.perform(post(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(testUser.toString()))
             .andExpect(status().isBadRequest());
     }
 
     @Test
     public void addUserWithPasswordFailure() throws Exception {
-        testUser = new User("test", null, "test");
+        User testUser = new User("test-username",null,"test-email");
         mvc.perform(post(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(testUser.toString()))
             .andExpect(status().isBadRequest());
     }
 
     @Test
     public void addUserWithEmailFailure() throws Exception {
-        testUser = new User("test", "test", null);
+        User testUser = new User("test-username","test-password",null);
         mvc.perform(post(USER_REQ_PATH).contentType(MediaType.APPLICATION_JSON).content(testUser.toString()))
             .andExpect(status().isBadRequest());
     }

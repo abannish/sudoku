@@ -11,7 +11,7 @@ import static com.example.sudokudbapi.staticMethods.JsonHandling.jsonToObject;
 import static com.example.sudokudbapi.staticMethods.JsonHandling.objectToJson;
 
 @Entity
-@Table(name = "Friends")
+@Table(name = "FRIENDS")
 @IdClass(FriendsPriKey.class)
 public class Friend {
 

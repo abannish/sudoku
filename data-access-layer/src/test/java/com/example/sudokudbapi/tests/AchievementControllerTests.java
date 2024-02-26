@@ -1,4 +1,4 @@
-package com.example.sudokudbapi;
+package com.example.sudokudbapi.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,6 +47,7 @@ public class AchievementControllerTests {
     }
 
     @Test
+    @
     public void addAchievementWithSuccess() throws Exception {
         MvcResult res; // used to retrieve data.
         

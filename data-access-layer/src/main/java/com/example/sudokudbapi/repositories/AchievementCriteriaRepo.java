@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.example.sudokudbapi.dataModes.AchievementCriteria;
 
 @Repository
-public interface AchievementCriteraRepo extends CrudRepository<AchievementCriteria, Integer> {}
+public interface AchievementCriteriaRepo extends CrudRepository<AchievementCriteria, Integer> {}
